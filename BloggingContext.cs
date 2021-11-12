@@ -1,6 +1,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Migrations;
+using rndcorecustomoperations.Models;
 
 namespace rndcorecustomoperations
 {
@@ -13,9 +14,9 @@ namespace rndcorecustomoperations
 
         public BloggingContext()
         {
-            var folder = Environment.SpecialFolder.LocalApplicationData;
-            var path = Environment.GetFolderPath(folder);
-            DbPath = $"{path}{System.IO.Path.DirectorySeparatorChar}blogging.db";
+            //var folder = Environment.SpecialFolder.LocalApplicationData;
+            //var path = Environment.GetFolderPath(folder);
+            DbPath = $"{Environment.CurrentDirectory}{System.IO.Path.DirectorySeparatorChar}blogging.db";
         }
 
         // The following configures EF to create a Sqlite database file in the

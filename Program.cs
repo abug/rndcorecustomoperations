@@ -1,9 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
-using System.Text.Json.Serialization;
-using Microsoft.EntityFrameworkCore.Storage;
+using rndcorecustomoperations.Models;
+using rndcorecustomoperations.Repositories;
 
 namespace rndcorecustomoperations
 {
@@ -26,7 +25,25 @@ namespace rndcorecustomoperations
         static void Main(string[] args)
         {
             //CreateSeedDataInJson();
-            ReadFromDb();   
+            //ReadFromDb();   
+            ReadFromDbWithBusiness();
+        }
+
+        private static async void ReadFromDbWithBusiness()
+        {
+            using (var dbContext = new BloggingContext())
+            {
+                 var blogsBusiness = new BlogsBusiness(new BlogsRepository(dbContext));
+
+                 var blogs = await blogsBusiness.FindAsync();
+
+                 foreach (var blog in blogs)
+                 {
+                     System.Console.WriteLine(blog);
+                 }
+            }
+
+            
         }
 
         /// Read data from db and visually verify correct data seed in console output.

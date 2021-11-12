@@ -1,0 +1,2 @@
+SELECT * FROM Blogs
+--DELETE FROM Blogs

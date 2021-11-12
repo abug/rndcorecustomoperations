@@ -1,3 +1,4 @@
+using rndcorecustomoperations.Models;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore.Migrations.Operations;
 
@@ -10,6 +11,6 @@ namespace rndcorecustomoperations
             this.Blogs = new List<Blog>();
         }
 
-        public List<Blog> Blogs { get; set; }
+        public IList<Blog> Blogs { get; set; }
     }
 }

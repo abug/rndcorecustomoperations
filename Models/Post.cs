@@ -1,4 +1,4 @@
-namespace rndcorecustomoperations
+namespace rndcorecustomoperations.Models
 {
     public class Post
     {

@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 
-namespace rndcorecustomoperations
+namespace rndcorecustomoperations.Models
 {
-    public class Blog
+    public class Blog : BaseEntity
     {
         public int BlogId { get; set; }
         public string Url { get; set; }
