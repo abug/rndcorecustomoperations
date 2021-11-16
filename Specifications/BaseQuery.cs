@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace rndcorecustomoperations.Repositories
+namespace rndcorecustomoperations.Specifications
 {
     public class BaseQuery<TEntity> : IQuery<TEntity>
     {

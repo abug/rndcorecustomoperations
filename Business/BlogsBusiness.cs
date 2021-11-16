@@ -2,8 +2,9 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using rndcorecustomoperations.Models;
 using System.Linq;
+using rndcorecustomoperations.Repositories;
 
-namespace rndcorecustomoperations.Repositories
+namespace rndcorecustomoperations.Business
 {
     public class BlogsBusiness : BaseBusiness<IBlogsRepository, Blog>, IBlogBusiness
     {

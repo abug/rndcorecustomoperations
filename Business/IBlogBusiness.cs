@@ -1,6 +1,6 @@
 using rndcorecustomoperations.Models;
 
-namespace rndcorecustomoperations.Repositories
+namespace rndcorecustomoperations.Business
 {
     public interface IBlogBusiness : IBaseBusiness<Blog>
     {

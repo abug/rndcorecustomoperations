@@ -23,7 +23,8 @@ namespace rndcorecustomoperations
         // special "local" folder for your platform.
         protected override void OnConfiguring(DbContextOptionsBuilder options)
         {
-            options.UseSqlite($"Data Source={DbPath}").ReplaceService<IMigrationsSqlGenerator, CustomMigrationsSqlGenerator>();
+            options.UseSqlServer("Server=tcp:sqlsrvrndrepos.database.windows.net,1433;Initial Catalog=sqldbrndrepos;Persist Security Info=False;User ID=abugai;Password=;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;").ReplaceService<IMigrationsSqlGenerator, CustomMigrationsSqlGenerator>();
+            //options.UseSqlite($"Data Source={DbPath}").ReplaceService<IMigrationsSqlGenerator, CustomMigrationsSqlGenerator>();
         }
     }
 }

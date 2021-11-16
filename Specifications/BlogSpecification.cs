@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using rndcorecustomoperations.Models;
 
-namespace rndcorecustomoperations.Repositories
+namespace rndcorecustomoperations.Specifications
 {
     public class BlogSpecification : ISpecification<Blog>
     {

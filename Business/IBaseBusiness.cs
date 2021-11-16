@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using rndcorecustomoperations.Models;
 
-namespace rndcorecustomoperations.Repositories
+namespace rndcorecustomoperations.Business
 {
     public interface IBaseBusiness<TEntity> where TEntity : BaseEntity
     {

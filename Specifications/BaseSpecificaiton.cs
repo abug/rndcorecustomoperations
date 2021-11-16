@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace rndcorecustomoperations.Repositories
+namespace rndcorecustomoperations.Specifications
 {
     public class BaseSpecificaiton<TEntity> : ISpecification<TEntity>
     {

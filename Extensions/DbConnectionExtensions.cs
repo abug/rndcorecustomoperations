@@ -3,8 +3,9 @@ using System.Data;
 using System.Data.Common;
 using System.Threading.Tasks;
 using Dapper;
+using rndcorecustomoperations.Specifications;
 
-namespace rndcorecustomoperations.Repositories
+namespace rndcorecustomoperations.Extensions
 {
     public static class DbConnectionExtensions
     {

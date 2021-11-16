@@ -2,8 +2,10 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using rndcorecustomoperations.Models;
 using System.Linq;
+using rndcorecustomoperations.Repositories;
+using rndcorecustomoperations.Specifications;
 
-namespace rndcorecustomoperations.Repositories
+namespace rndcorecustomoperations.Business
 {
     public class BaseBusiness<TRepository, TEntity> : 
         IBaseBusiness<TEntity> where TRepository : IBaseRepository<TEntity> where TEntity : BaseEntity

@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using rndcorecustomoperations.Models;
+using rndcorecustomoperations.Specifications;
 
 namespace rndcorecustomoperations.Repositories
 {

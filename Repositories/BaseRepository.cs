@@ -2,6 +2,8 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using rndcorecustomoperations.Models;
 using Microsoft.EntityFrameworkCore;
+using rndcorecustomoperations.Specifications;
+using rndcorecustomoperations.Extensions;
 
 namespace rndcorecustomoperations.Repositories
 {
