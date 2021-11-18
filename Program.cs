@@ -1,6 +1,14 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Data;
 using System.IO;
+using System.Linq.Expressions;
+using System.Reflection;
 using System.Text.Json;
+using System.Threading.Tasks;
+using Dapper;
+using Microsoft.EntityFrameworkCore;
+using rndcorecustomoperations.Business;
 using rndcorecustomoperations.Models;
 using rndcorecustomoperations.Repositories;
 
@@ -22,14 +30,16 @@ namespace rndcorecustomoperations
             "http://www.live.com"
         };
 
-        static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
             //CreateSeedDataInJson();
             //ReadFromDb();   
-            ReadFromDbWithBusiness();
+            await ReadFromDbWithBusiness();
+            //await ReadFromDbWithDapper();
+            //Console.WriteLine(ExpressionResearch(b => b.Url));
         }
 
-        private static async void ReadFromDbWithBusiness()
+        private static async Task ReadFromDbWithBusiness()
         {
             using (var dbContext = new BloggingContext())
             {
@@ -42,8 +52,6 @@ namespace rndcorecustomoperations
                      System.Console.WriteLine(blog);
                  }
             }
-
-            
         }
 
         /// Read data from db and visually verify correct data seed in console output.
@@ -58,6 +66,42 @@ namespace rndcorecustomoperations
                      System.Console.WriteLine(blog);
                  }
             }
+        }
+
+        private static async Task ReadFromDbWithDapper()
+        {
+            using (var dbContext = new BloggingContext())
+            {
+                var parameters = new DynamicParameters();
+                parameters.Add("url", "q");
+                var query = "ListBlogsParams";
+                var command = new CommandDefinition(
+                    query, parameters, commandType: CommandType.StoredProcedure);
+                var connection = dbContext.Database.GetDbConnection();
+                var blogs = await connection.QueryAsync<Blog>(command);
+                foreach (var blog in blogs)
+                {
+                    System.Console.WriteLine(blog);
+                }
+            }
+        }
+
+        private static string ExpressionResearch(Expression<Func<Blog, object>> property)
+        {
+            var lambda = (LambdaExpression)property;
+            MemberExpression memberExpression;
+
+            if (lambda.Body is UnaryExpression)
+            {
+                UnaryExpression unaryExpression = (UnaryExpression)(lambda.Body);
+                memberExpression = (MemberExpression)(unaryExpression.Operand);
+            }
+            else
+            {
+                memberExpression = (MemberExpression)(lambda.Body);
+            }
+
+            return ((PropertyInfo)memberExpression.Member).Name;
         }
 
         /// Fill database entity list and serialize to json. Than read from file to visually verify in console output.

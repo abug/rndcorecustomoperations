@@ -3,8 +3,11 @@ using rndcorecustomoperations.Models;
 
 namespace rndcorecustomoperations.Specifications
 {
-    public class BlogSpecification : ISpecification<Blog>
+    public class BlogSpecification : BaseSpecificaiton<Blog>
     {
-        public IDictionary<string, string> Parameters => throw new System.NotImplementedException();
+        public BlogSpecification()
+        {
+            AddParameter(b => b.Url, "q");
+        }
     }
 }

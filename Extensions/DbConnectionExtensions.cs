@@ -9,7 +9,8 @@ namespace rndcorecustomoperations.Extensions
 {
     public static class DbConnectionExtensions
     {
-        public static Task<IEnumerable<T>> QueryAsync<T>(this IDbConnection cnn, IQuery<T> query)
+        public static Task<IEnumerable<T>> QueryListAsync<T>(
+            this IDbConnection cnn, IQuery<T> query)
         {
             var parameters = new DynamicParameters();
             foreach (var parameter in query.Parameters)
@@ -18,7 +19,7 @@ namespace rndcorecustomoperations.Extensions
             }
 
             var command = new CommandDefinition(query.QueryBody, parameters,
-                commandType: CommandType.Text);
+                commandType: CommandType.StoredProcedure);
 
             return cnn.QueryAsync<T>(command);
         }

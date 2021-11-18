@@ -11,4 +11,12 @@ namespace rndcorecustomoperations.Specifications
 
         public override string QueryBody => "SELECT * FROM Blogs";
     }
+
+    public class BlogsEfQuery : BaseQuery<Blog>
+    {
+        public BlogsEfQuery() : base()
+        {
+            
+        }
+    }
 }

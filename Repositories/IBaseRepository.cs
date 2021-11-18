@@ -10,8 +10,10 @@ namespace rndcorecustomoperations.Repositories
         Task<TEntity> GetEntity(
             IQuery<TEntity> query, ISpecification<TEntity> specification = null);
 
-        Task<IEnumerable<TEntity>> GetAllAsync(
+        Task<IEnumerable<TEntity>> FindAsync(
             IQuery<TEntity> query, ISpecification<TEntity> specification = null);
+
+        Task<IEnumerable<TEntity>> FindAsync(ISpecification<TEntity> specification = null);
 
         Task Update(ISpecification<TEntity> specification);
     }

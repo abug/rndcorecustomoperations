@@ -4,13 +4,15 @@ namespace rndcorecustomoperations.Specifications
 {
     public class BaseQuery<TEntity> : IQuery<TEntity>
     {
+        private IDictionary<string, string> _parameters;
+
         public BaseQuery()
         {
-            this.Parameters = new Dictionary<string, string>();
+            _parameters = new Dictionary<string, string>();
         }
 
         public virtual string QueryBody => string.Empty;
 
-        public virtual IDictionary<string, string> Parameters { get; set; }
+        public virtual IDictionary<string, string> Parameters => _parameters;
     }
 }

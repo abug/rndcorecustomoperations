@@ -16,14 +16,14 @@ namespace rndcorecustomoperations
         {
             //var folder = Environment.SpecialFolder.LocalApplicationData;
             //var path = Environment.GetFolderPath(folder);
-            DbPath = $"{Environment.CurrentDirectory}{System.IO.Path.DirectorySeparatorChar}blogging.db";
+            //DbPath = $"{Environment.CurrentDirectory}{System.IO.Path.DirectorySeparatorChar}blogging.db";
         }
 
         // The following configures EF to create a Sqlite database file in the
         // special "local" folder for your platform.
         protected override void OnConfiguring(DbContextOptionsBuilder options)
         {
-            options.UseSqlServer("Server=tcp:sqlsrvrndrepos.database.windows.net,1433;Initial Catalog=sqldbrndrepos;Persist Security Info=False;User ID=abugai;Password=;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;").ReplaceService<IMigrationsSqlGenerator, CustomMigrationsSqlGenerator>();
+            options.UseSqlServer("Server=tcp:sqlsrvrndrepos.database.windows.net,1433;Initial Catalog=sqldbrndrepos;Persist Security Info=False;User ID=abugai;Password=FkPeU%89;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;").ReplaceService<IMigrationsSqlGenerator, CustomMigrationsSqlGenerator>();
             //options.UseSqlite($"Data Source={DbPath}").ReplaceService<IMigrationsSqlGenerator, CustomMigrationsSqlGenerator>();
         }
     }

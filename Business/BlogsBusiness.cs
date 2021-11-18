@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using rndcorecustomoperations.Models;
 using System.Linq;
 using rndcorecustomoperations.Repositories;
+using rndcorecustomoperations.Specifications;
 
 namespace rndcorecustomoperations.Business
 {
@@ -14,7 +15,7 @@ namespace rndcorecustomoperations.Business
 
         public override async Task<IList<Blog>> FindAsync()
         {
-            var result = await Repository.GetAllAsync(new BlogsQuery());
+            var result = await Repository.FindAsync();
             
             return result.ToList();
         }

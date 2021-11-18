@@ -21,7 +21,7 @@ namespace rndcorecustomoperations.Business
 
         public virtual async Task<IList<TEntity>> FindAsync()
         {
-            var result = await Repository.GetAllAsync(new BaseQuery<TEntity>());
+            var result = await Repository.FindAsync(new BaseQuery<TEntity>());
             
             return result.ToList<TEntity>();
         }
