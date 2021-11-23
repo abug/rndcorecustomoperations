@@ -1,3 +1,6 @@
+using System;
+using System.Collections.Generic;
+using System.Data.Common;
 using System.Threading.Tasks;
 using rndcorecustomoperations.Specifications;
 
@@ -5,16 +8,8 @@ namespace rndcorecustomoperations.Repositories
 {
     public interface IDapperRepository
     {
-        Task<TResponse> FindAsync<TRequest, TResponse>(IQuery<TRequest> query, ISpecification<TRequest> specification = null);
-    }
-
-    public class BaseDapperRepository : IDapperRepository
-    {
+        Task<Tuple<IEnumerable<TResponse>>> FindAsync<TRequest, TResponse>(IQuery<TRequest> query);
         
-
-        public Task<TResponse> FindAsync<TRequest, TResponse>(IQuery<TRequest> query, ISpecification<TRequest> specification = null)
-        {
-            throw new System.NotImplementedException();
-        }
+        Task<Tuple<IEnumerable<TResponse1>, IEnumerable<TResponse2>>> FindAsync<TRequest, TResponse1, TResponse2>(IQuery<TRequest> query);
     }
 }

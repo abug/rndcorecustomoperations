@@ -6,6 +6,6 @@ namespace rndcorecustomoperations.Specifications
     {
         string QueryBody { get; }
 
-        IDictionary<string, string> Parameters { get; }
+        IDictionary<string, object> Parameters { get; }
     }
 }

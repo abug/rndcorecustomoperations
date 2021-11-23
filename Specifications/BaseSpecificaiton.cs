@@ -11,9 +11,9 @@ namespace rndcorecustomoperations.Specifications
             new List<Expression<Func<TEntity, object>>>();
 
         //private string _commandText;
-        private IDictionary<string, string> _parameters;
+        private IDictionary<string, object> _parameters;
 
-        public IDictionary<string, string> Parameters => _parameters;
+        public IDictionary<string, object> Parameters => _parameters;
 
         public Expression<Func<TEntity, bool>> FilterCondition { get; private set; }
 
@@ -27,7 +27,7 @@ namespace rndcorecustomoperations.Specifications
 
         public BaseSpecificaiton()
         {
-            _parameters = new Dictionary<string, string>();
+            _parameters = new Dictionary<string, object>();
         }
 
         protected void AddParameter(
@@ -43,7 +43,7 @@ namespace rndcorecustomoperations.Specifications
             _parameters.Add(name, value);
         }
 
-        protected void AddParameter(KeyValuePair<string, string> parameter)
+        protected void AddParameter(KeyValuePair<string, object> parameter)
         {
             _parameters.Add(parameter);
         }

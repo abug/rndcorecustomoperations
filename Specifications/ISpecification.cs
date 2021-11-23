@@ -7,7 +7,7 @@ namespace rndcorecustomoperations.Specifications
 {
     public interface ISpecification<TEntity>
     {
-        public IDictionary<string, string> Parameters { get; }
+        public IDictionary<string, object> Parameters { get; }
 
         Expression<Func<TEntity, bool>> FilterCondition { get; }
 

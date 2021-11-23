@@ -11,6 +11,7 @@ using Microsoft.EntityFrameworkCore;
 using rndcorecustomoperations.Business;
 using rndcorecustomoperations.Models;
 using rndcorecustomoperations.Repositories;
+using rndcorecustomoperations.Services;
 
 namespace rndcorecustomoperations
 {
@@ -34,10 +35,45 @@ namespace rndcorecustomoperations
         {
             //CreateSeedDataInJson();
             //ReadFromDb();   
-            await ReadFromDbWithBusiness();
+            //await ReadFromDbWithBusiness();
             //await ReadFromDbWithDapper();
             //Console.WriteLine(ExpressionResearch(b => b.Url));
+            await ReadMultipleResults();
         }
+
+        private static async Task ReadMultipleResults()
+        {
+            using (var dbContext = new BloggingContext())
+            {
+                var blogsService = new BlogsService(
+                    new BaseDapperRepository(dbContext.Database.GetDbConnection())); 
+
+                var request = new BlogRequest();
+                request.BlogIds.Add("IdValue", new List<int> { 11, 12 });
+
+                var result = await blogsService.GetBlogResponseAsync(request);
+
+                foreach (var item in result)
+                {
+                    Console.WriteLine(item);
+                }
+            }
+        }
+
+        // private static async Task ReadWithService()
+        // {
+        //     using (var dbContext = new BloggingContext())
+        //     {
+        //         var blogsService = new BlogsService(new BaseDapperRepository(dbContext.Database.GetDbConnection()));     
+        //         var result = await blogsService.GetBlogResponseAsync(new BlogRequest { Id = 11 });
+
+        //         foreach (var item in result)
+        //         {
+        //             Console.WriteLine(item);
+        //         }
+        //     }
+            
+        // }
 
         private static async Task ReadFromDbWithBusiness()
         {
