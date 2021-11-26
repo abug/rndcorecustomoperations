@@ -9,13 +9,13 @@ namespace rndcorecustomoperations.Specifications
 {
     public class BaseQuery<TRequest> : IQuery<TRequest>
     {
-        private IDictionary<string, object> _parameters;
+        private IDictionary<string, dynamic> _parameters;
 
         private readonly TRequest request;
 
         public BaseQuery()
         {
-            _parameters = new Dictionary<string, object>();
+            _parameters = new Dictionary<string, dynamic>();
         }
 
         public BaseQuery(TRequest request) : this()
@@ -27,15 +27,23 @@ namespace rndcorecustomoperations.Specifications
 
         public virtual IDictionary<string, object> Parameters => _parameters;
 
+        protected void AddTableParameter<T>(
+            Expression<Func<TRequest, object>> expression)
+        {
+            
+        }
+
         protected void AddTableParameter(
             Expression<Func<TRequest, object>> expression)
         {
-            var name = GetParameterName(expression);
-            var columnType = GetParameterType(expression);
-
+            var columnName = GetParameterName(expression);
             var value = GetParameterValue(request, expression);
+            _parameters.Add(columnName, value);
+        }
 
-            
+        protected void AddTableParameters()
+        {
+
         }
 
         protected void AddTableParameter(
@@ -94,12 +102,12 @@ namespace rndcorecustomoperations.Specifications
             _parameters.Add(parameter);
         }
 
-        private object GetParameterValue(TRequest request, Expression<Func<TRequest, object>> expression)
+        private dynamic GetParameterValue(TRequest request, Expression<Func<TRequest, object>> expression)
         {
             MemberExpression memberExpr = (MemberExpression)expression.Body;
             string memberName = memberExpr.Member.Name;
-            Func<TRequest, object> compiledDelegate = expression.Compile();
-            object value = compiledDelegate(request);
+            Func<TRequest, dynamic> compiledDelegate = expression.Compile();
+            dynamic value = compiledDelegate(request);
 
             return value;
         }

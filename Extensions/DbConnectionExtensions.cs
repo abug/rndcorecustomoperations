@@ -63,7 +63,12 @@ namespace rndcorecustomoperations.Extensions
 
             foreach (var parameter in query.Parameters)
             {
-                parameters.Add(parameter.Key, parameter.Value);
+                if (parameter.Value is DataTable)
+                {
+                    var tableParameter = parameter.Value as DataTable;
+
+                    parameters.Add(parameter.Key, tableParameter.AsTableValuedParameter());    
+                }
             }
 
             var command = new CommandDefinition(query.QueryBody, parameters,

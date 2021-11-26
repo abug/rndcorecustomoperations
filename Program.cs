@@ -49,7 +49,12 @@ namespace rndcorecustomoperations
                     new BaseDapperRepository(dbContext.Database.GetDbConnection())); 
 
                 var request = new BlogRequest();
-                request.BlogIds.Add("IdValue", new List<int> { 11, 12 });
+                
+                request.BlogIds.Columns.Add("IdValue", typeof(int));
+                request.BlogIds.Columns.Add("UrlValue", typeof(string));
+                request.BlogIds.Rows.Add(11, "http://www.youtube.com");
+                request.BlogIds.Rows.Add(12, "http://www.facebook.com");
+                request.BlogIds.Rows.Add(13, "http://www.baidu.com");
 
                 var result = await blogsService.GetBlogResponseAsync(request);
 

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Data;
 
 namespace rndcorecustomoperations.Models
 {
@@ -6,9 +7,10 @@ namespace rndcorecustomoperations.Models
     {
         public BlogRequest()
         {
-            BlogIds = new Dictionary<string, IList<int>>();
+            BlogIds = new DataTable();
         }
 
-        public IDictionary<string, IList<int>> BlogIds { get; set; }
+        //public IList<int> BlogIds { get; set; }
+        public DataTable BlogIds { get; set;}
     }
 }
