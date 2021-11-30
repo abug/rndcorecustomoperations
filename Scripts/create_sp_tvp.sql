@@ -1,7 +1,7 @@
 CREATE TYPE BlogTableType 
    AS TABLE
       ( IdValue INT
-      , UrlValue NVARCHAR(MAX) );
+      , UrlValue NVARCHAR(MAX));
 GO
 
 IF EXISTS (
@@ -15,12 +15,14 @@ DROP PROCEDURE dbo.ListBlogsWithTableParams
 GO
 
 CREATE PROCEDURE dbo.ListBlogsWithTableParams
-    @TVP BlogTableType READONLY
+    @BlogIds BlogTableType READONLY
 AS
 SET NOCOUNT ON
 BEGIN
-    --SELECT * FROM @TVP
-    SELECT * FROM dbo.Blogs JOIN @TVP ON BlogId = IdValue
+    --SELECT 'VALUE'
+    SELECT UrlValue AS BlogUrl FROM @BlogIds
+    --SELECT * FROM dbo.Blogs JOIN @TVP ON BlogId = IdValue
+    SELECT * FROM @BlogIds
 END
 GO
 

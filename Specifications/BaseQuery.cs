@@ -27,12 +27,6 @@ namespace rndcorecustomoperations.Specifications
 
         public virtual IDictionary<string, object> Parameters => _parameters;
 
-        protected void AddTableParameter<T>(
-            Expression<Func<TRequest, object>> expression)
-        {
-            
-        }
-
         protected void AddTableParameter(
             Expression<Func<TRequest, object>> expression)
         {

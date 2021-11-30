@@ -24,6 +24,8 @@ namespace rndcorecustomoperations.Services
                 blogResponse.Add(new BlogResponse { Url = item.UrlValue });
             }
 
+            var altResponse = await repository.FindAsync<BlogRequest, dynamic, dynamic>(new BlogsMultipleQuery(request));
+
             return blogResponse;
         }
     }
