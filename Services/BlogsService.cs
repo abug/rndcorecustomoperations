@@ -8,7 +8,7 @@ namespace rndcorecustomoperations.Services
 {
     public class BlogsService : BaseService, IBlogsService
     {
-        public BlogsService(IDapperRepository repository) : base(repository)
+        public BlogsService(IDatabaseRepository repository) : base(repository)
         {
         }
 

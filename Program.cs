@@ -12,9 +12,19 @@ using rndcorecustomoperations.Business;
 using rndcorecustomoperations.Models;
 using rndcorecustomoperations.Repositories;
 using rndcorecustomoperations.Services;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using Microsoft.Data.SqlClient;
+using System.Data.Common;
 
 namespace rndcorecustomoperations
 {
+    public class Constants
+    {
+        public static string ConnectionString => 
+            "Server=tcp:sqlsrvrndrepos.database.windows.net,1433;Initial Catalog=sqldbrndrepos;Persist Security Info=False;User ID=abugai;Password=;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
+    }
+
     public class Program
     {
         private static List<string> urls = new List<string>
@@ -38,32 +48,80 @@ namespace rndcorecustomoperations
             //await ReadFromDbWithBusiness();
             //await ReadFromDbWithDapper();
             //Console.WriteLine(ExpressionResearch(b => b.Url));
-            await ReadMultipleResults();
+            //await ReadMultipleResults()
+
+
+            await RegisterServices();
         }
 
-        private static async Task ReadMultipleResults()
+        private static async Task RegisterServices()
         {
-            using (var dbContext = new BloggingContext())
-            {
-                var blogsService = new BlogsService(
-                    new BaseDapperRepository(dbContext.Database.GetDbConnection())); 
+            Console.WriteLine("Create host; Register services;");
 
-                var request = new BlogRequest();
+            using IHost host = Host.CreateDefaultBuilder()
+                .ConfigureServices((_, services) => 
+                    services
+                    .AddTransient<IDbConnection>(db => new SqlConnection(Constants.ConnectionString))
+                    .AddTransient<ISynapseConnection>(db => new DatabaseConnection(Constants.ConnectionString))
+                    .AddTransient<IDatabaseConnection>(db => new DatabaseConnection(Constants.ConnectionString))
+                    .AddTransient<IDapperRepository, BaseDapperRepository>()
+                    .AddTransient<ISynapseRepository, SynapseRepository>()
+                    .AddTransient<IDatabaseRepository, DatabaseRepository>()
+                    .AddTransient<IBlogsService, BlogsService>())
+                .Build();
+
+            Console.WriteLine("Services registered; Read from database;");
+
+            await ReadMultipleResultsWithDI(host.Services);
+
+            //await host.RunAsync();
+        }
+
+        private static async Task ReadMultipleResultsWithDI(IServiceProvider services)
+        {
+            using IServiceScope serviceScope = services.CreateScope();
+
+            var blogsService = serviceScope.ServiceProvider.GetService<IBlogsService>();
+
+            var request = new BlogRequest();
                 
-                request.BlogIds.Columns.Add("IdValue", typeof(int));
-                request.BlogIds.Columns.Add("UrlValue", typeof(string));
-                request.BlogIds.Rows.Add(11, "http://www.youtube.com");
-                request.BlogIds.Rows.Add(12, "http://www.facebook.com");
-                request.BlogIds.Rows.Add(13, "http://www.baidu.com");
+            request.BlogIds.Columns.Add("IdValue", typeof(int));
+            request.BlogIds.Columns.Add("UrlValue", typeof(string));
+            request.BlogIds.Rows.Add(11, "http://www.youtube.com");
+            request.BlogIds.Rows.Add(12, "http://www.facebook.com");
+            request.BlogIds.Rows.Add(13, "http://www.baidu.com");
 
-                var result = await blogsService.GetBlogResponseAsync(request);
+            var result = await blogsService.GetBlogResponseAsync(request);
 
-                foreach (var item in result)
-                {
-                    Console.WriteLine(item);
-                }
+            foreach (var item in result)
+            {
+                Console.WriteLine(item);
             }
         }
+
+        // private static async Task ReadMultipleResults()
+        // {
+        //     using (var dbContext = new BloggingContext())
+        //     {
+        //         var blogsService = new BlogsService(
+        //             new BaseDapperRepository(dbContext.Database.GetDbConnection())); 
+
+        //         var request = new BlogRequest();
+                
+        //         request.BlogIds.Columns.Add("IdValue", typeof(int));
+        //         request.BlogIds.Columns.Add("UrlValue", typeof(string));
+        //         request.BlogIds.Rows.Add(11, "http://www.youtube.com");
+        //         request.BlogIds.Rows.Add(12, "http://www.facebook.com");
+        //         request.BlogIds.Rows.Add(13, "http://www.baidu.com");
+
+        //         var result = await blogsService.GetBlogResponseAsync(request);
+
+        //         foreach (var item in result)
+        //         {
+        //             Console.WriteLine(item);
+        //         }
+        //     }
+        // }
 
         // private static async Task ReadWithService()
         // {
