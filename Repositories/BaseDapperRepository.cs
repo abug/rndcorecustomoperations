@@ -7,7 +7,7 @@ using System.Collections.Generic;
 
 namespace rndcorecustomoperations.Repositories
 {
-    public class BaseDapperRepository : IDapperRepository, ISynapseRepository, IDatabaseRepository
+    public class BaseDapperRepository : IDapperRepository
     {
         private readonly IDbConnection connection;
 
